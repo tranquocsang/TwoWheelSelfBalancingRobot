@@ -14,5 +14,13 @@
 #define SYSTEMCONFIG_H_
 
 extern void Config_System(void);
+extern uint32_t Get_tick();
+
+
+extern void Togle(uint8_t LED, uint32_t ms_delay);
+extern void ConfigButtons(void);
+extern void ButtonsISR(void);
+extern void Button1ISR(void);
+extern void Button2ISR(void);
 
 #endif /* SYSTEMCONFIG_H_ */

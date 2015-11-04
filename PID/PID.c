@@ -13,9 +13,11 @@
 #include "../include.h"
 #include "PID.h"
 
-const float Const_K = 1.2;
-PID_PARAMETERS PID1 = {.Kp = 2.0, .Kd = 0.9, .Ki =0.0,
-		.Ts = 0.01, .PID_Saturation = 70, .e_=0.0, .e__=0.0, .u_=0.0};
+PID_PARAMETERS PID_Small_Angle = {.Kp = 2.0, .Kd = 0.9, .Ki =0.0,
+		.Ts = 0.01, .PID_Saturation = 70, .Const_K = 1.2, .e_=0.0, .e__=0.0, .u_=0.0};
+		
+PID_PARAMETERS PID_Big_Angle = {.Kp = 2.0, .Kd = 0.9, .Ki =0.0,
+		.Ts = 0.01, .PID_Saturation = 70, .Const_K = 1.2, .e_=0.0, .e__=0.0, .u_=0.0};
 //* Private variables -------------------------------------------------------*/
 /**
  * @brief set params for PID controller
@@ -54,7 +56,7 @@ double pid_process(PID_PARAMETERS* pid_parameter, float Current_Angle, float Tar
 		pid_parameter->u = -pid_parameter->PID_Saturation;
 	}
 
-	return (Const_K * pid_parameter->u);
+	return (pid_parameter->Const_K * pid_parameter->u);
 }
 
 /**

@@ -15,12 +15,14 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/timer.h"
 #include "driverlib/adc.h"
+#include "driverlib/pwm.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/qei.h"
 #include "driverlib/fpu.h"
@@ -36,9 +38,15 @@
 #include "mpu6050.h"
 #include "MyUart.h"
 
+#include "Timer/Timer.h"
 #include "SystemConfig.h"
 #include "Bluetooth/uartstdio.h"
 #include "Bluetooth/ustdlib.h"
+#include "Complementary_Filter/Complementary_Filter.h"
+#include "Kalman_Filter/Kalman_Filter.h"
+
+#include "PID/PID.h"
+#include "Speed_Control/speed_control.h"
 
 
 //

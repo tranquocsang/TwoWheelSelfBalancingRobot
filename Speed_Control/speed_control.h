@@ -35,8 +35,8 @@
 
 /***************************************************************/
 extern void Config_PWM(void);
-extern void SetPWM_MotorLeft(int32_t ucDutyCycle, float Left_Factor);
-extern void SetPWM_MotorRight(int32_t ucDutyCycle, float Right_Factor);
+extern void SetPWM_MotorLeft(int32_t ucDutyCycle, float Left_Factor,int32_t Saturation_Left_PWM);
+extern void SetPWM_MotorRight(int32_t ucDutyCycle, float Right_Factor,int32_t Saturation_Right_PWM);
 
 
 #endif /* SPEED_CONTROL_SPEED_CONTROL_H_ */

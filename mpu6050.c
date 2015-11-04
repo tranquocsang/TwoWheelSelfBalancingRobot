@@ -6,8 +6,22 @@
  */
 #include "include.h"
 
-int32_t accaxisX,accaxisY,accaxisZ;
-int32_t gyroaxisX,gyroaxisY,gyroaxisZ;
+int16_t accaxisX,accaxisY,accaxisZ;
+int16_t gyroaxisX,gyroaxisY,gyroaxisZ;
+
+int16_t accaxisX_offset = 0;
+int16_t accaxisY_offset = 0;
+int16_t accaxisZ_offset = 0;
+
+int16_t gyroaxisX_zero = 0;
+int16_t gyroaxisY_zero = 0;
+int16_t gyroaxisZ_zero = 0;
+
+int32_t int32_accaxisX=0, int32_accaxisY=0, int32_accaxisZ=0;
+int32_t int32_gyroaxisX=0, int32_gyroaxisY=0 ,int32_gyroaxisZ=0;
+
+
+extern float AngleX_Zero, AngleY_Zero;
 
 /*
  * Initial I2C1
@@ -131,14 +145,17 @@ void initMPU6050(void)
 	SysCtlDelay(SysCtlClockGet()/100);
 	while (i2cRead(MPU6050_ADDRESS, MPU6050_PWR_MGMT_1) & (0x01 << 7))
 	{
+		LED_RED_ON;
+		//Led Red(on) for indicating can not connect to MPU6050
 		// Wait for the bit to clear
 	};
+
 	SysCtlDelay(SysCtlClockGet()/100);
 	i2cWrite(MPU6050_ADDRESS, MPU6050_PWR_MGMT_1, (1 << 3) | (1 << 0)); // Disable sleep mode, disable temperature sensor and use PLL as clock reference
 
 	i2cBuffer[0] = 0; // Set the sample rate to 1kHz - 1kHz/(1+0) = 1kHz
 	i2cBuffer[1] = 0x03; // Disable FSYNC and set 41 Hz Gyro filtering, 1 KHz sampling
-	i2cBuffer[2] = 3 << 3; // Set Gyro Full Scale Range to +-2000deg/s
+	i2cBuffer[2] = 2 << 3; // Set Gyro Full Scale Range to +-1000deg/s
 	i2cBuffer[3] = 2 << 3; // Set Accelerometer Full Scale Range to +-8g
 	i2cBuffer[4] = 0x03; // 41 Hz Acc filtering
 	i2cWriteData(MPU6050_ADDRESS, MPU6050_SMPLRT_DIV, i2cBuffer, 5); // Write to all five registers at once
@@ -158,12 +175,146 @@ void getMPU6050Data(void)
 	i2cReadData(MPU6050_ADDRESS, MPU6050_ACCEL_XOUT_H, buf, 14); // Note that we can't write directly into MPU6050_t
 																 // because of endian conflict. So it has to be done manually
 
-	accaxisX = (buf[0] << 8) | buf[1];
-	accaxisY = (buf[2] << 8) | buf[3];
-	accaxisZ = (buf[4] << 8) | buf[5];
+	accaxisX = (int16_t)((buf[0] << 8) | buf[1]);
+	accaxisY = (int16_t)((buf[2] << 8) | buf[3]);
+	accaxisZ = (int16_t)((buf[4] << 8) | buf[5]);
 
-	gyroaxisX = (buf[8] << 8) | buf[9];
-	gyroaxisY = (buf[10] << 8) | buf[11];
-	gyroaxisZ = (buf[12] << 8) | buf[13];
+	gyroaxisX = (int16_t)((buf[8] << 8) | buf[9]) - gyroaxisX_zero;
+	gyroaxisY = (int16_t)((buf[10] << 8) | buf[11]) - gyroaxisY_zero;
+	gyroaxisZ = (int16_t)((buf[12] << 8) | buf[13]) - gyroaxisZ_zero;
+}
+/*********************************************************************/
+void Inc_ACC()
+{
+	int32_accaxisX += accaxisX;
+	int32_accaxisY += accaxisY;
+	int32_accaxisZ += accaxisZ;
+}
+/*********************************************************************/
+void Inc_GYRO()
+{
+	int32_gyroaxisX += gyroaxisX;
+	int32_gyroaxisY += gyroaxisY;
+	int32_gyroaxisZ += gyroaxisZ;
+}
+/*********************************************************************/
+/*
+ *
+ */
+void Calibrate_MPU6050()
+{
+
+	int32_t accaxisX_offset1000=0;
+	int32_t accaxisY_offset1000=0;
+	int32_t accaxisZ_offset1000=0;
+
+	int32_t gyroaxisX_zero1000=0;
+	int32_t gyroaxisY_zero1000=0;
+	int32_t gyroaxisZ_zero1000=0;
+
+	uint32_t i  = 0;
+	for(i = 0; i<1000; i++)
+	{
+		uint8_t buf[14];
+		i2cReadData(MPU6050_ADDRESS, MPU6050_ACCEL_XOUT_H, buf, 14); 	// Note that we can't write directly into MPU6050_t
+																		 // because of endian conflict. So it has to be done manually
+
+//		accaxisX_offset1000 += (int16_t)(buf[0] << 8) | buf[1];
+//		accaxisY_offset1000 += (int16_t)(buf[2] << 8) | buf[3];
+//		accaxisZ_offset1000 += (int16_t)(buf[4] << 8) | buf[5];
+
+		gyroaxisX_zero1000 += (int16_t)(buf[8] << 8) | buf[9];
+		gyroaxisY_zero1000 += (int16_t)(buf[10] << 8) | buf[11];
+		gyroaxisZ_zero1000 += (int16_t)(buf[12] << 8) | buf[13];
+
+		SysCtlDelay(SysCtlClockGet()/3000);
+	}
+
+//	accaxisX_offset = accaxisX_offset1000/1000;
+//	accaxisY_offset = accaxisY_offset1000/1000;
+//	accaxisZ_offset = accaxisZ_offset1000/1000;
+
+	gyroaxisX_zero = gyroaxisX_zero1000/1000;
+	gyroaxisY_zero = gyroaxisY_zero1000/1000;
+	gyroaxisZ_zero = gyroaxisZ_zero1000/1000;
+
+#ifdef _DEBUG_CALIB_
+
+	UARTPuts(UART0_BASE,"Calib MPU6050:\n");
+
+	UARTPuts(UART0_BASE,"accaxisX_offest:\t");
+	UARTPutn(UART0_BASE,accaxisX);
+	UARTPuts(UART0_BASE,"\n");
+
+	UARTPuts(UART0_BASE,"accaxisY_offest:\t");
+	UARTPutn(UART0_BASE,accaxisY);
+	UARTPuts(UART0_BASE,"\n");
+
+	UARTPuts(UART0_BASE,"accaxisZ_offest:\t");
+	UARTPutn(UART0_BASE,accaxisZ);
+	UARTPuts(UART0_BASE,"\n");
+
+	UARTPuts(UART0_BASE,"gyroaxisX_zero:\t");
+	UARTPutn(UART0_BASE,gyroaxisX_zero);
+	UARTPuts(UART0_BASE,"\n");
+
+	UARTPuts(UART0_BASE,"gyroaxisY_zero:\t");
+	UARTPutn(UART0_BASE,gyroaxisY_zero);
+	UARTPuts(UART0_BASE,"\n");
+
+	UARTPuts(UART0_BASE,"gyroaxisZ_zero:\t");
+	UARTPutn(UART0_BASE,gyroaxisZ_zero);
+	UARTPuts(UART0_BASE,"\n");
+#endif
+}
+/*******************************************************************/
+void Get_Zero_Angle()
+{
+
+	double AngleX_Zero500=0;
+	double AngleY_Zero500=0;
+
+	uint32_t i  = 0;
+		for(i = 0; i<500; i++)
+		{
+			getMPU6050Data();
+			AngleX_Zero500 += MPU6050_Get_X_angle();
+			AngleY_Zero500 += MPU6050_Get_Y_angle();
+
+			SysCtlDelay(SysCtlClockGet()/3000);
+		}
+		AngleX_Zero = AngleX_Zero500/500;
+		AngleY_Zero = AngleY_Zero500/500;
+}
+/********************************************************************/
+/*
+ *
+ */
+float MPU6050_Get_X_angle()
+{
+	float acc_x_angle = 0;
+	acc_x_angle=(rad_to_degree)*atan2((float)accaxisY, sqrt((float)(accaxisX*accaxisX)+(float)(accaxisZ*accaxisZ)));
+	return acc_x_angle;
+}
+
+float MPU6050_Get_Y_angle()
+{
+	float acc_y_angle = 0;
+	acc_y_angle=(rad_to_degree)*atan2((float)(-accaxisX), sqrt((float)(accaxisY*accaxisY)+(float)(accaxisZ*accaxisZ)));
+	return acc_y_angle;
+}
+/*********************************************************************/
+float MPU6050_Gyro_X_rate()
+{
+	float gyro_x_rate = 0;
+	gyro_x_rate = (float)(gyroaxisX)/MPU6050_GYRO_SCALE_FACTOR_1000;
+	return gyro_x_rate;
+}
+
+float MPU6050_Gyro_Y_rate()
+{
+	float gyro_y_rate = 0;
+	gyro_y_rate = (float)(gyroaxisY)/MPU6050_GYRO_SCALE_FACTOR_1000;
+	return gyro_y_rate;
 }
 

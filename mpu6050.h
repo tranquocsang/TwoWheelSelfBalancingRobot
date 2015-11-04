@@ -25,10 +25,11 @@ extern "C" {
 #define MPU6050_ADDRESS                     0x68
 #define MPU6050_WHO_AM_I_ID                 0x68
 
-// Scale factor for +-2000deg/s and +-8g - see datasheet:
-#define MPU6050_GYRO_SCALE_FACTOR_2000      16.4f
+// Scale factor for +-1000deg/s and +-8g - see datasheet:
+#define MPU6050_GYRO_SCALE_FACTOR_1000      32.8f
 #define MPU6050_ACC_SCALE_FACTOR_8          4096.0f
 
+#define rad_to_degree						57.295779
 
 void initI2C(void);
 void i2cWrite(uint8_t addr, uint8_t regAddr, uint8_t data);
@@ -37,6 +38,18 @@ uint8_t i2cRead(uint8_t addr, uint8_t regAddr);
 void i2cReadData(uint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length);
 void initMPU6050(void);
 void getMPU6050Data(void);
+
+void Inc_ACC();
+void Inc_GYRO();
+void Calibrate_MPU6050();
+void Get_Zero_Angle();
+
+float MPU6050_Get_X_angle();
+float MPU6050_Get_Y_angle();
+
+float MPU6050_Gyro_X_rate();
+float MPU6050_Gyro_Y_rate();
+
 #ifdef __cplusplus
 }
 #endif

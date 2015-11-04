@@ -15,8 +15,8 @@
 
 //* Private function prototype ----------------------------------------------*/
 void Config_PWM(void);
-void SetPWM_MotorLeft(int32_t ucDutyCycle, float Left_Factor);
-void SetPWM_MotorRight(int32_t ucDutyCycle, float Right_Factor);
+void SetPWM_MotorLeft(int32_t ucDutyCycle, float Left_Factor, int32_t Saturation_Left_PWM);
+void SetPWM_MotorRight(int32_t ucDutyCycle, float Right_Factor, int32_t Saturation_Right_PWM);
 //* Private variables -------------------------------------------------------*/
 /********************************************************************************/
 static uint32_t ui32PWM_Period = 0;
@@ -66,7 +66,7 @@ void Config_PWM()
 	ENABLE_PWM();
 }
 /*********************************************************************************/
-void SetPWM_MotorLeft(int32_t ucDutyCycle,	const float Left_Factor)
+void SetPWM_MotorLeft(int32_t ucDutyCycle,	const float Left_Factor, int32_t Saturation_Left_PWM)
 {
 	if(ucDutyCycle > 0)
 	{
@@ -76,13 +76,8 @@ void SetPWM_MotorLeft(int32_t ucDutyCycle,	const float Left_Factor)
 	{
 		MotorLeft_GoBack();
 	}
-	else
-	{
-		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4,1);
-		DISSABLE_PWM();
-	}
 	ucDutyCycle = abs(ucDutyCycle);
-	if(ucDutyCycle>75) ucDutyCycle = 75;
+	if(ucDutyCycle>Saturation_Left_PWM) ucDutyCycle = Saturation_Left_PWM;
 	if(ucDutyCycle<5)
 	{
 		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_4,1);
@@ -98,7 +93,7 @@ void SetPWM_MotorLeft(int32_t ucDutyCycle,	const float Left_Factor)
 	}
 }
 /*********************************************************************************/
-void SetPWM_MotorRight(int32_t ucDutyCycle, const float Right_Factor)
+void SetPWM_MotorRight(int32_t ucDutyCycle, const float Right_Factor, int32_t Saturation_Right_PWM)
 {
 	if(ucDutyCycle > 0)
 	{
@@ -116,7 +111,7 @@ void SetPWM_MotorRight(int32_t ucDutyCycle, const float Right_Factor)
 //		LED_GREEN_OFF;
 	}
 	ucDutyCycle = abs(ucDutyCycle);
-	if(ucDutyCycle>75) ucDutyCycle = 75;
+	if(ucDutyCycle>Saturation_Right_PWM) ucDutyCycle = Saturation_Right_PWM;
 	if(ucDutyCycle<5)
 	{
 		PWMPulseWidthSet(PWM0_BASE, PWM_OUT_5,1);

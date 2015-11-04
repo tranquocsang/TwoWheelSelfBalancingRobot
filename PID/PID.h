@@ -26,6 +26,7 @@ typedef struct
 	float e__;
 	float Ts;
 	float PID_Saturation;
+	const float Const_K;
 } PID_PARAMETERS;
 
 extern void pid_init(void);
