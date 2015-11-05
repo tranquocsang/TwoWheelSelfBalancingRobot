@@ -60,24 +60,24 @@ void main(void)
 	DISSABLE_PWM();
 	LED_GREEN_OFF;				// LED_GREEN(OFF) : Dissable PWM
 
-	UART0_init();
+	HostCommInit();
 	Timer1Init();
 	initI2C();
 	SysCtlDelay(SysCtlClockGet()/300);
 
-	UARTPuts(UART0_BASE,"Initial MPU6050 :\n");
+	bluetooth_print("Initial MPU6050 :\n");
 	initMPU6050();
 	LED_RED_OFF;
 	SysCtlDelay(SysCtlClockGet()/300);
-	UARTPuts(UART0_BASE,"Initial MPU6050 : OK \n");
+	bluetooth_print("Initial MPU6050 : OK \n");
 
-	UARTPuts(UART0_BASE,"Calib MPU6050 :\n");
+	bluetooth_print("Calib MPU6050 :\n");
 	Calibrate_MPU6050();
-	UARTPuts(UART0_BASE,"Calib MPU6050 : OK \n");
+	bluetooth_print("Calib MPU6050 : OK \n");
 
-	UARTPuts(UART0_BASE,"Get_Zero_Angle :\n");
+	bluetooth_print("Get_Zero_Angle :\n");
 	Get_Zero_Angle();
-	UARTPuts(UART0_BASE,"Get_Zero_Angle : OK \n");
+	bluetooth_print("Get_Zero_Angle : OK \n");
 
 	IntMasterEnable(); 			//enable processor interrupts
 
@@ -85,6 +85,10 @@ void main(void)
 	while(1)
 	{
 		Togle(LED_RED,100);			// Togle LED_RED: 100 * 10ms = 1s. setup: DONE, Running Process_Balancing();
+
+#ifdef _USE_HOSTCOMM_
+		HostComm_process();
+#endif
 
 #ifdef _USE_COMPLEMENTARY_FILTER_
 		Process_Balancing_Complementary_Filter();
@@ -99,7 +103,7 @@ void main(void)
 #endif
 
 		Target_Position = 0.0;
-//		Y_angle = Y_angle - AngleY_Zero;
+		Y_angle = Y_angle - AngleY_Zero;
 		if(PID_Process_Flag == true)
 		{
 			PID_Process_Flag = false;
@@ -107,7 +111,7 @@ void main(void)
 			if(((int)(Y_angle - Target_Position) < 3) && ((int)(Y_angle + Target_Position) > -3))
 			{
 				int32_Control_Signal =  (int32_t)(pid_process(&PID_Small_Angle, Y_angle, Target_Position));
-				
+
 				Saturation_Left_PWM = 75;
 				Saturation_Right_PWM = 75;
 
@@ -132,7 +136,7 @@ void main(void)
 				Saturation_Left_PWM = 90;
 				Saturation_Right_PWM = 90;
 			}
-			/******************************Big_Angle*********************************/			
+			/******************************Big_Angle*********************************/
 			else
 			{
 				int32_Control_Signal =  (int32_t)(pid_process(&PID_Big_Angle, Y_angle, Target_Position));
@@ -150,12 +154,12 @@ void main(void)
 			SetPWM_MotorLeft(int32_Control_Signal,Left_Factor, Saturation_Left_PWM);
 			SetPWM_MotorRight(int32_Control_Signal,Right_Factor, Saturation_Right_PWM);
 		}
-		
-			UARTPutn(UART0_BASE,Y_angle);
-			UARTPuts(UART0_BASE," do\n");
 
-			UARTPutn(UART0_BASE,int32_Control_Signal);
-			UARTPuts(UART0_BASE,"... \n");
+		bluetooth_print("%d \r\n",Y_angle);
+		bluetooth_print(" do\n");
+
+		bluetooth_print("%d \r\n",int32_Control_Signal);
+		bluetooth_print("... \n");
 	/*----------------------Set PWM()--------------------------*/
 	}
 }
@@ -367,13 +371,4 @@ int8_t Check_Postive_Sig(double Data)
 {
 	if(Data > 0) return (1);
 	return (-1);
-}
-//*****************************************************************************
-//
-//! Uart0 interrupt
-//
-//*****************************************************************************
-void UART0IntHandler(void)
-{
-
 }

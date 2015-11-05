@@ -12,6 +12,8 @@
 //#define _USE_COMPLEMENTARY_FILTER_
 //#define _USE_2ND_COMPLEMENTARY_FILTER_
 
+#define _USE_HOSTCOMM_
+
 
 //*****************************************************************************
 //

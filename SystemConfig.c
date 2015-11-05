@@ -24,6 +24,10 @@ uint32_t Get_tick();
 
 uint32_t Counter_Togle_Led = 0;
 
+extern bool HostComm_Enable_Timer_Flag;
+extern uint32_t HostComm_Timer_Counter;
+extern bool HostComm_Process_Flag;
+
 void ConfigButtons(void);
 void ButtonsISR(void);
 void Button1ISR(void);
@@ -73,6 +77,19 @@ static void SysTickIntHandle(void)
 {
 	ms_Tickcount++;
 	bool_Process_Flag = true;
+
+#ifdef _USE_HOSTCOMM_
+	if(HostComm_Enable_Timer_Flag == true)
+		HostComm_Timer_Counter++;
+	if(HostComm_Timer_Counter > UPDATE_TIME_MS)
+	{
+		HostComm_Timer_Counter = 0;
+		HostComm_Process_Flag = true;
+	}
+#endif
+
+
+
 }
 /*****************************************************************************/
 uint32_t Get_tick()

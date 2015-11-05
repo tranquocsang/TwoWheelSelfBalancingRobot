@@ -38,10 +38,14 @@
 #include "mpu6050.h"
 #include "MyUart.h"
 
+#include "QEI/qei.h"
+#include "LCD1202/STE2007.h"
 #include "Timer/Timer.h"
 #include "SystemConfig.h"
 #include "Bluetooth/uartstdio.h"
 #include "Bluetooth/ustdlib.h"
+#include "Bluetooth/Bluetooth.h"
+#include "HostComm/HostComm.h"
 #include "Complementary_Filter/Complementary_Filter.h"
 #include "Kalman_Filter/Kalman_Filter.h"
 

@@ -42,9 +42,6 @@ void Timer0Init(void)
 void TIMER0_ISR(void)
 {
 	ROM_TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-
-	PID_Process_Flag = true;
-	Counter_Togle_Led++;
 }
 /******************************************************************************
  * ----------------void Timer1Init(void) --------------------------------------
