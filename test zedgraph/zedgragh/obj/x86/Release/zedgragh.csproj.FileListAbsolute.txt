@@ -1,0 +1,5 @@
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Release\zedgragh.exe.config
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Release\zedgragh.FormMain.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Release\zedgragh.FormUartConnect.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Release\zedgragh.Properties.Resources.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Release\zedgragh.csproj.GenerateResource.Cache

@@ -1,0 +1,201 @@
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\obj\x86\Debug\zedgragh.Form1.resources
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\zedgragh.exe
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\zedgragh.pdb
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\ZedGraph.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\ZedGraph.Web.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\ZedGraph.xml
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\ZedGraph.Web.xml
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\obj\x86\Debug\zedgragh.exe
+E:\hoc tap\lap trinh c#\code\zedgragh\zedgragh\obj\x86\Debug\zedgragh.pdb
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.exe
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.pdb
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\zedgragh.exe
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\zedgragh.pdb
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\ZedGraph.xml
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\ZedGraph.Web.xml
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.Form1.resources
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+E:\hoc tap\hoc ki 5\Co so tu dong\btl\PID controller\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.exe
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\ok\zedgragh\zedgragh\obj\x86\Debug\zedgragh.pdb
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.exe
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.pdb
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.FormMain.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\obj\x86\Debug\zedgragh.FormUartConnect.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\zedgragh.exe.config
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\zedgragh.exe
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\zedgragh.pdb
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\ZedGraph.xml
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\zedgragh\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.exe.config
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.exe
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.pdb
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.exe
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.pdb
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ZedGraph.xml
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormMain.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormUartConnect.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+D:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+I:\test zedgraph\zedgragh\bin\Debug\zedgragh.exe.config
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.exe
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.pdb
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormMain.resources
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormUartConnect.resources
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+I:\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+I:\test zedgraph\zedgragh\bin\Debug\zedgragh.exe
+I:\test zedgraph\zedgragh\bin\Debug\zedgragh.pdb
+I:\test zedgraph\zedgragh\bin\Debug\ZedGraph.xml
+I:\test zedgraph\zedgragh\bin\Debug\ZedGraph.Web.xml
+I:\test zedgraph\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+I:\test zedgraph\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\zedgragh.exe.config
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.exe
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.pdb
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormMain.resources
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormUartConnect.resources
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+E:\Workspace\OneDrive\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\zedgragh.exe
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\zedgragh.pdb
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\ZedGraph.xml
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\ZedGraph.Web.xml
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+E:\Workspace\OneDrive\test zedgraph\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.exe.config
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.exe
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.pdb
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.exe
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.pdb
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ZedGraph.xml
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ZedGraph.Web.xml
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormMain.resources
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormUartConnect.resources
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+E:\Workspace\OneDrive\Study\PIF\Projects\Quadrotor - Anh An\GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.exe.config
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.exe
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.pdb
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.exe
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\zedgragh.pdb
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\ZedGraph.xml
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\ZedGraph.Web.xml
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\de\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\es\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\fr\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\hu\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\it\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\ja\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\pt\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\ru\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\sk\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\sv\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\tr\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\zh-cn\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\bin\Debug\zh-tw\ZedGraph.resources.dll
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csprojResolveAssemblyReference.cache
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormMain.resources
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.FormUartConnect.resources
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.Properties.Resources.resources
+I:\BK Drive\PIF\C#\Code Gui\Code GUI\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.csproj.GenerateResource.Cache
+C:\Users\Lê Hà Anh Khoa\Downloads\BK Drive\Project PIF\test zedgraph\zedgragh\bin\Debug\zedgragh.exe.config
+C:\Users\Lê Hà Anh Khoa\Downloads\BK Drive\Project PIF\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.exe
+C:\Users\Lê Hà Anh Khoa\Downloads\BK Drive\Project PIF\test zedgraph\zedgragh\obj\x86\Debug\zedgragh.pdb
