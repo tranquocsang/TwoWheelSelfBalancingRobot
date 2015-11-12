@@ -51,7 +51,7 @@ void HC05_ClearEvtQueue(void);
 void bluetooth_init(uint32_t baudrate) {
 	uint32_t ui32_SystemClock;
 
-	ui32_SystemClock = SysCtlClockGet();
+	ui32_SystemClock = u32_UsrSystemClockGet();
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
@@ -146,7 +146,36 @@ static uint16_t ReadRxBuffer(uint8_t* rxBuf, uint16_t numToRead) {
 	return bytesRead;
 }
 
-bool bluetooth_send(uint8_t *pui8Buffer, uint32_t ui32Count) {
+bool bluetooth_send(const uint8_t *pui8Buffer, uint32_t ui32Count) {
+	if (txHead == txTail) {
+		UARTCharPutNonBlocking(UART0_BASE, *pui8Buffer++);
+		ui32Count--;
+	}
+	//
+	// Loop while there are more characters to send.
+	//
+	while (ui32Count--) {
+		if (txHead + 1 < MAX_TX_BUF) {
+			if ((txHead + 1) != txTail) {
+				txBuffer[txHead++] = *pui8Buffer++;
+			} else
+				return false;
+		} else {
+			if (0 != txTail) {
+				txBuffer[txHead] = *pui8Buffer++;
+				txHead = 0;
+			} else
+				return false;
+		}
+		//
+		// Write the next character to the UART.
+		//
+//        UARTCharPut(UART0_BASE, *pui8Buffer++);
+	}
+	return true;
+}
+
+bool bluetooth_sendBytes(uint8_t *pui8Buffer, uint32_t ui32Count) {
 	if (txHead == txTail) {
 		UARTCharPutNonBlocking(UART0_BASE, *pui8Buffer++);
 		ui32Count--;
@@ -323,7 +352,7 @@ Bluetooth Event Queue
  -----------------------------------------------------------------*/
 static bool HC05_PutEvtIntoQueue(HC05_EVENT_ID event) {
 	bool ret = false;
-	unsigned char i, j;
+	unsigned char i;
 	if (hc05_IsEvtQueueFull == false) {
 		/*
 		 TODO: What if interrupt happens and puts an event to queue while app is putting to queue
@@ -399,10 +428,10 @@ void HC05_HandleTimeoutEvt(void) {
 }
 
 void HC05_RunTimeout(unsigned long ms) {
-//	hc05_Timer_ID = TIMER_RegisterEvent(HC05_HandleTimeoutEvt, ms);
+	hc05_Timer_ID = TIMER_RegisterEvent(HC05_HandleTimeoutEvt, ms);
 }
 
 void HC05_StopTimeout(void) {
-//	TIMER_UnregisterEvent(hc05_Timer_ID);
+	TIMER_UnregisterEvent(hc05_Timer_ID);
 }
 

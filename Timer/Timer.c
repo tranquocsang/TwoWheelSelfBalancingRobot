@@ -1,83 +1,103 @@
-/*
- * Timer.c
- *
- *  Created on: Nov 2, 2015
- *      Author: Bach
+/**
+ *	Raise your ARM 2015 sample code http://raiseyourarm.com/
+ *	Author: Pay it forward club
+ *	http://www.payitforward.edu.vn
+ *  version 0.0.1
  */
+
+/**
+ * @file	timer.c
+ * @brief	timer event managment
+ */
+#include <stdint.h>
+#include <stdbool.h>
 #include "../include.h"
 #include "Timer.h"
 
-extern uint32_t Counter_Togle_Led;
-extern bool PID_Process_Flag;
-/****************************************************************
- *-----------------void Timer0Int(void)-------------------------
- * Description	: Configure Timer0A interrupt every 0.2s
- * Parameters	: none
- * Return		: don't care
- */
-void Timer0Init(void)
+#define TIMER_PERIOD_MS 1
+#define MAX_TIMEOUT_EVT 10
+
+typedef struct
 {
-	uint32_t ui32PeriodTM0;
+  TIMER_CALLBACK_FUNC callback;
+  unsigned long period_cnt;
+}TIMEOUT_EVT;
 
-	ROM_SysCtlPeripheralEnable(TIMER0_PERIPHERAL);							// Enable Timer1
-	ROM_TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);					// Configure Timer1 is Periodic
-	ui32PeriodTM0 = SysCtlClockGet()/TIMER0A_FRQ;								// Set Period of Timer1 = SysClock/10
-	ROM_TimerLoadSet(TIMER0_BASE, TIMER_A, ui32PeriodTM0);				// Use TimerA of Timer1
+//* Private function prototype ----------------------------------------------*/
+void TIMER_ISR(void);
+//* Private variables -------------------------------------------------------*/
+static TIMEOUT_EVT timer_event_list[MAX_TIMEOUT_EVT];
 
-	TimerIntRegister(TIMER0_BASE, TIMER_A, &TIMER0_ISR);
+void Timer_Init(void)
+{
+	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER4);
 
-	ROM_IntEnable(INT_TIMER0A);												// Enable Timer0A interrupt
-	ROM_TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-	ROM_TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
-	ROM_TimerControlStall(TIMER0_BASE, TIMER_A, false);
-	ROM_TimerEnable(TIMER0_BASE, TIMER_A);
+	ROM_TimerConfigure(TIMER4_BASE, TIMER_CFG_PERIODIC);
+	ROM_TimerLoadSet(TIMER4_BASE, TIMER_A, ROM_SysCtlClockGet() * TIMER_PERIOD_MS/ 1000);	//Interval: TIMER_PERIOD_MS(ms)
+
+	TimerIntRegister(TIMER4_BASE, TIMER_A, &TIMER_ISR);
+	ROM_IntEnable(INT_TIMER4A);
+	ROM_TimerIntEnable(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+	ROM_TimerIntClear(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+	ROM_TimerControlStall(TIMER4_BASE, TIMER_A, false);
+	ROM_TimerEnable(TIMER4_BASE, TIMER_A);
 }
-/************************************************************************
- *---------------void Timer0IntHandler(void)----------------------------
- *
- * Description	: Timer 0 interrupts handler .
- * Parameters	: none
- * Return		: don't care
+
+/**
+ * @brief Register event
+ * @param callback function name
+ * @param ms event timeout
+ * @return timer ID
  */
-void TIMER0_ISR(void)
+TIMER_ID TIMER_RegisterEvent(TIMER_CALLBACK_FUNC callback, unsigned long ms)
 {
-	ROM_TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+    int i;
+    for(i=0; i< MAX_TIMEOUT_EVT; i++)
+    {
+      if((timer_event_list[i].period_cnt == 0) && (timer_event_list[i].callback == NULL)) break;
+    }
+    if(i == MAX_TIMEOUT_EVT)
+    	return INVALID_TIMER_ID;
+
+    timer_event_list[i].period_cnt = (unsigned long)(ms/TIMER_PERIOD_MS);
+    timer_event_list[i].callback = callback;
+
+    return (TIMER_ID)i;
 }
-/******************************************************************************
- * ----------------void Timer1Init(void) --------------------------------------
- *
- * Description	: Timer1A interrupt 0.1s for generate PWM
- * Parameters	: none
- * Return		: don't care
- */
-void Timer1Init(void)
+
+bool TIMER_UnregisterEvent(TIMER_ID timer_id)
 {
-	uint32_t ui32PeriodTM1;
-
-	ROM_SysCtlPeripheralEnable(TIMER1_PERIPHERAL);							// Enable Timer1
-	ROM_TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);					// Configure Timer1 is Periodic
-	ui32PeriodTM1 = SysCtlClockGet()/TIMER1A_FRQ;								// Set Period of Timer1 = SysClock/10
-	ROM_TimerLoadSet(TIMER1_BASE, TIMER_A, ui32PeriodTM1);				// Use TimerA of Timer1
-
-	TimerIntRegister(TIMER1_BASE, TIMER_A, &TIMER1_ISR);
-
-	ROM_IntEnable(INT_TIMER1A);												// Enable Timer0A interrupt
-	ROM_TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-	ROM_TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-	ROM_TimerControlStall(TIMER1_BASE, TIMER_A, false);
-	ROM_TimerEnable(TIMER1_BASE, TIMER_A);
+	bool ret = false;
+    if(timer_id < MAX_TIMEOUT_EVT)
+    {
+        timer_event_list[timer_id].period_cnt = 0;
+        timer_event_list[timer_id].callback = NULL;
+        ret = true;
+    }
+    return ret;
 }
-/******************************************************************************
- * ------------void Timer1IntHandler(void) ------------------------------------
- *
- * Description	:
- * Parameters	: none
- * Return		: don't care
- */
-void TIMER1_ISR(void)
-{
-	ROM_TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
-	PID_Process_Flag = true;
-	Counter_Togle_Led++;
+void TIMER_ISR(void)
+{
+    int i;
+	ROM_TimerIntClear(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+
+	for(i=0; i<MAX_TIMEOUT_EVT; i++)
+	{
+		if(timer_event_list[i].period_cnt > 0)
+		{
+			timer_event_list[i].period_cnt--;
+			if(timer_event_list[i].period_cnt == 0 && timer_event_list[i].callback != NULL)
+			{
+				(timer_event_list[i].callback)();
+				/*
+				 * Only clear timeout callback when period equal to 0
+				 * Another callback could be register in current timeout callback
+				 */
+				if (timer_event_list[i].period_cnt == 0)
+					timer_event_list[i].callback = NULL;
+			}
+		}
+	}
+
 }

@@ -42,10 +42,15 @@ int32_t Saturation_Right_PWM = 0;
 const float Left_Factor = 1.0;
 const float Right_Factor  = 1.0;
 
+int32_t posLeft=0,posRight=0;
+
+void Process_Balancing(void);
 void Process_Balancing_Complementary_Filter();
 void Process_Balancing_2nd_Complementary_Filter();
 void Process_Balancing_Kalman_Filter();
 int8_t Check_Postive_Sig(double Data);
+
+void Test_ENC();
 
 /*********************************************************************/
 /*
@@ -53,43 +58,59 @@ int8_t Check_Postive_Sig(double Data);
  */
 void main(void)
 {
+	system_SetState(SYSTEM_INITIALIZE);
 	Config_System();
-
-	Config_PWM();
-	SysCtlDelay(SysCtlClockGet()/300);
+	Button_init();
+	qei_init(20);
+	speed_control_init();
+	ROM_SysCtlDelay(SysCtlClockGet()/300);
 	DISSABLE_PWM();
 	LED_GREEN_OFF;				// LED_GREEN(OFF) : Dissable PWM
 
-	HostCommInit();
+	EEPROMConfig();
+	Timer_Init();
 	Timer1Init();
+
+	ConfigServo();
+	SERVO_DISABLE;
+
+	lcd_init();
+	lcd_clear(LCD_ALL);
+	LCDprintf(LCD_ALL, "ZCZCZC");
+
+	HostCommInit();
 	initI2C();
-	SysCtlDelay(SysCtlClockGet()/300);
+	ROM_SysCtlDelay(SysCtlClockGet()/300);
 
-	bluetooth_print("Initial MPU6050 :\n");
-	initMPU6050();
-	LED_RED_OFF;
-	SysCtlDelay(SysCtlClockGet()/300);
-	bluetooth_print("Initial MPU6050 : OK \n");
-
-	bluetooth_print("Calib MPU6050 :\n");
-	Calibrate_MPU6050();
-	bluetooth_print("Calib MPU6050 : OK \n");
-
-	bluetooth_print("Get_Zero_Angle :\n");
-	Get_Zero_Angle();
-	bluetooth_print("Get_Zero_Angle : OK \n");
+//	bluetooth_print("Initial MPU6050 :\n");
+//	initMPU6050();
+//	LED_RED_OFF;
+//	ROM_SysCtlDelay(SysCtlClockGet()/300);
+//	bluetooth_print("Initial MPU6050 : OK \n");
+//
+//	bluetooth_print("Calib MPU6050 :\n");
+//	Calibrate_MPU6050();
+//	bluetooth_print("Calib MPU6050 : OK \n");
+//
+//	bluetooth_print("Get_Zero_Angle :\n");
+//	Get_Zero_Angle();
+//	bluetooth_print("Get_Zero_Angle : OK \n");
 
 	IntMasterEnable(); 			//enable processor interrupts
-
-	ENABLE_PWM();
+	system_SetState(SYSTEM_TEST_ENC);
 	while(1)
 	{
 		Togle(LED_RED,100);			// Togle LED_RED: 100 * 10ms = 1s. setup: DONE, Running Process_Balancing();
+		system_Process_System_State();
+	}
+}
+/*****************************************************************************/
+/*
+ * END OF MAIN.C
+ ******************************************************************************/
 
-#ifdef _USE_HOSTCOMM_
-		HostComm_process();
-#endif
-
+void Process_Balancing(void)
+{
 #ifdef _USE_COMPLEMENTARY_FILTER_
 		Process_Balancing_Complementary_Filter();
 #endif
@@ -103,7 +124,7 @@ void main(void)
 #endif
 
 		Target_Position = 0.0;
-		Y_angle = Y_angle - AngleY_Zero;
+//		Y_angle = Y_angle - AngleY_Zero;
 		if(PID_Process_Flag == true)
 		{
 			PID_Process_Flag = false;
@@ -111,26 +132,25 @@ void main(void)
 			if(((int)(Y_angle - Target_Position) < 3) && ((int)(Y_angle + Target_Position) > -3))
 			{
 				int32_Control_Signal =  (int32_t)(pid_process(&PID_Small_Angle, Y_angle, Target_Position));
-
-				Saturation_Left_PWM = 75;
-				Saturation_Right_PWM = 75;
+				Saturation_Left_PWM = 65;
+				Saturation_Right_PWM = 65;
 
 				if(Check_Postive_Sig(int32_Control_Signal) != Pre_Sig)
 				{
 					Pre_Sig = Check_Postive_Sig(int32_Control_Signal);
-					pid_reset(&PID_Small_Angle);
+//					pid_reset(&PID_Small_Angle);
 //					int32_Control_Signal = 0;
 				}
 			}
 			/*************************Saturation_Angle(+)****************************/
-			else if((int)(Y_angle - Target_Position) > 10)
+			else if((int)(Y_angle - Target_Position) > 5)
 			{
 				int32_Control_Signal = -90;
 				Saturation_Left_PWM = 90;
 				Saturation_Right_PWM = 90;
 			}
 			/*************************Saturation_Angle(-)****************************/
-			else if((int)(Y_angle + Target_Position) < -10)
+			else if((int)(Y_angle + Target_Position) < -5)
 			{
 				int32_Control_Signal = 90;
 				Saturation_Left_PWM = 90;
@@ -140,28 +160,28 @@ void main(void)
 			else
 			{
 				int32_Control_Signal =  (int32_t)(pid_process(&PID_Big_Angle, Y_angle, Target_Position));
-				Saturation_Left_PWM = 90;
-				Saturation_Right_PWM = 90;
+				Saturation_Left_PWM = 80;
+				Saturation_Right_PWM = 80;
 
 				if(Check_Postive_Sig(int32_Control_Signal) != Pre_Sig)
 				{
 					Pre_Sig = Check_Postive_Sig(int32_Control_Signal);
-					pid_reset(&PID_Big_Angle);
+//					pid_reset(&PID_Big_Angle);
 //					int32_Control_Signal = 0;
 				}
 			}
 
-			SetPWM_MotorLeft(int32_Control_Signal,Left_Factor, Saturation_Left_PWM);
-			SetPWM_MotorRight(int32_Control_Signal,Right_Factor, Saturation_Right_PWM);
+			speed_set(MOTOR_Right,int32_Control_Signal);
+			speed_set(MOTOR_Left, int32_Control_Signal);
+
 		}
 
-		bluetooth_print("%d \r\n",Y_angle);
-		bluetooth_print(" do\n");
+//		bluetooth_print("... %f  \n",Y_angle);
+//		bluetooth_print(" do \n");
 
-		bluetooth_print("%d \r\n",int32_Control_Signal);
-		bluetooth_print("... \n");
+//		bluetooth_print("...%d  \n",(int32_t)int32_Control_Signal);
+//		bluetooth_print("... \n");
 	/*----------------------Set PWM()--------------------------*/
-	}
 }
 /*******************************************************************************/
 /*
@@ -242,7 +262,7 @@ void Process_Balancing_2nd_Complementary_Filter(void)
 	if(bool_Process_Flag == true)
 	{
 		bool_Process_Flag = false;
-		MPU_Step %=10;
+		MPU_Step %=9;
 		switch(MPU_Step)
 		{
 		case 0: //MPU_Step++;break;
@@ -252,14 +272,13 @@ void Process_Balancing_2nd_Complementary_Filter(void)
 		case 4: //MPU_Step++;break;
 		case 5: //MPU_Step++;break;
 		case 6: //MPU_Step++;break;
-		case 7: //MPU_Step++;break;
-		case 8:
+		case 7:
 			getMPU6050Data();
 			Inc_ACC();
 			Inc_GYRO();
 			MPU_Step++;
 		break;
-		case 9:
+		case 8:
 			accaxisX = (int16_t)((int32_accaxisX/MPU_Step));
 			accaxisY = (int16_t)((int32_accaxisY/MPU_Step));
 			accaxisZ = (int16_t)((int32_accaxisZ/MPU_Step));
@@ -296,7 +315,7 @@ void Process_Balancing_2nd_Complementary_Filter(void)
 //			X_angle = Kalman_X_Filter(Acc_X_angle, Gyro_X_rate, dt);
 //			Y_angle = Kalman_Y_Filter(Acc_Y_angle, Gyro_Y_rate, dt);
 
-			MPU_Step=10;
+			MPU_Step++;
 		break;
 		}
 
@@ -371,4 +390,13 @@ int8_t Check_Postive_Sig(double Data)
 {
 	if(Data > 0) return (1);
 	return (-1);
+}
+/********************************************************************************/
+void Test_ENC()
+{
+	posLeft = qei_getPosLeft();
+	posRight = qei_getPosRight();
+	bluetooth_print("LEFT_ENC : %d \n", posLeft);
+	bluetooth_print("RIGHT_ENC : %d \n", posRight);
+	ROM_SysCtlDelay(SysCtlClockGet()/3);
 }

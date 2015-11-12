@@ -36,11 +36,12 @@
 
 #include "define.h"
 #include "mpu6050.h"
-#include "MyUart.h"
+#include "MyServo.h"
 
 #include "QEI/qei.h"
 #include "LCD1202/STE2007.h"
 #include "Timer/Timer.h"
+#include "Timer/MyTimer.h"
 #include "SystemConfig.h"
 #include "Bluetooth/uartstdio.h"
 #include "Bluetooth/ustdlib.h"
@@ -48,9 +49,17 @@
 #include "HostComm/HostComm.h"
 #include "Complementary_Filter/Complementary_Filter.h"
 #include "Kalman_Filter/Kalman_Filter.h"
+#include "Eeprom/EEPROM.h"
+#include "Button/Button.h"
 
 #include "PID/PID.h"
-#include "Speed_Control/speed_control.h"
+#include "QEI/qei.h"
+#include "main.h"
+
+#include "STR/Uocluong.h"
+#include "STR/STR_Indirect.h"
+#include "STR/speed_control.h"
+#include "STR/Control_initialize.h"
 
 
 //

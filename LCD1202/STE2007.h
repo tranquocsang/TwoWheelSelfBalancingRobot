@@ -38,13 +38,20 @@
 //*****************************************************************************
 #ifdef PIN_CONFIG_ARM					// Pin configuration for ARM M4
 
-#define LCD_PIN_TYPE_OUTPUT	GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3)
+#define LCD_PIN_TYPE_OUTPUT	GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE,GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3)
+#define LCD_PIN_TYPE_CS		GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE,GPIO_PIN_4 | GPIO_PIN_6 | GPIO_PIN_7)
 
-#define LCD_CS_LOW			GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0x00)
-#define LCD_CS_HIGH			GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0xFF)
+#define LCD_CS1_LOW			GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4, 0x00)
+#define LCD_CS1_HIGH		GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4, 0xFF)
 
-#define LCD_RESET_LOW		GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, 0x00)
-#define LCD_RESET_HIGH		GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, 0xFF)
+#define LCD_CS2_LOW			GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_7, 0x00)
+#define LCD_CS2_HIGH		GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_7, 0xFF)
+
+#define LCD_CS3_LOW			GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0x00)
+#define LCD_CS3_HIGH		GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0xFF)
+
+#define LCD_RESET_LOW		GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0x00)
+#define LCD_RESET_HIGH		GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0xFF)
 
 #define LCD_SDA_HIGH		GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, 0xFF)
 #define LCD_SDA_LOW			GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, 0x00)
@@ -52,6 +59,14 @@
 #define LCD_CLK_HIGH		GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_3, 0xFF)
 #define LCD_CLK_LOW			GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_3, 0x00)
 #endif
+
+typedef enum
+{
+	LCD_1 = 1,
+	LCD_2 = 2,
+	LCD_3 = 3,
+	LCD_ALL = 4
+}CS_LCD;
 
 //******************************************************************************
 // END OF USER CONFIGURATION SECTION
@@ -62,16 +77,16 @@
 //******************************************************************************
 // Public function header
 //******************************************************************************
-void lcd_write(char dc, char byte);
+void lcd_write(CS_LCD eCS_LCD, char dc, char byte);
 void lcd_init(void);
-void lcd_clear(void);
-void lcd_gotoxy(unsigned char col, unsigned char row);
-void lcd_normal(void);
-void lcd_all(void);
-void lcd_putc(char c);
-void lcd_puts(char *s);
-void lcd_putn(unsigned long num);
-void LCDprintf(const char *pcString, ...);
+void lcd_clear(CS_LCD eCS_LCD);
+void lcd_gotoxy(CS_LCD eCS_LCD, unsigned char col, unsigned char row);
+void lcd_normal(CS_LCD eCS_LCD);
+void lcd_all(CS_LCD eCS_LCD);
+void lcd_putc(CS_LCD eCS_LCD, char c);
+void lcd_puts(CS_LCD eCS_LCD, char *s);
+void lcd_putn(CS_LCD eCS_LCD, unsigned long num);
+void LCDprintf(CS_LCD eCS_LCD, const char *pcString, ...);
 //*****************************************************************************
 // COMMAND LIST
 //*****************************************************************************

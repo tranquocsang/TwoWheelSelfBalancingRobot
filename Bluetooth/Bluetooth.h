@@ -56,7 +56,8 @@ typedef enum
 } HC05_EVENT_ID;
 
 extern void bluetooth_init(uint32_t baudrate);
-extern bool bluetooth_send(uint8_t *pui8Buffer, uint32_t ui32Count);
+extern bool bluetooth_send(const uint8_t *pui8Buffer, uint32_t ui32Count);
+extern bool bluetooth_sendBytes(uint8_t *pui8Buffer, uint32_t ui32Count);
 extern uint16_t bluetooth_recv(uint8_t* rxBuf, uint16_t numToRead, bool block);
 extern void bluetooth_print(const char * __restrict format, ...);
 extern bool HC05_RegisterEvtNotify(void (*callback)());

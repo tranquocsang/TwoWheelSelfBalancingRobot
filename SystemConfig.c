@@ -16,6 +16,7 @@
 //* Private function prototype ----------------------------------------------*/
 static void system_SystickConfig(uint32_t ui32_msInterval);
 static void SysTickIntHandle(void);
+static SYSTEM_STATE e_SystemState = SYSTEM_POWER_UP;
 //* Private variables -------------------------------------------------------*/
 //* Global variables -------------------------------------------------------*/
 uint32_t ms_Tickcount=0;
@@ -24,14 +25,14 @@ uint32_t Get_tick();
 
 uint32_t Counter_Togle_Led = 0;
 
-extern bool HostComm_Enable_Timer_Flag;
-extern uint32_t HostComm_Timer_Counter;
-extern bool HostComm_Process_Flag;
+static uint32_t systemClock = 80000000;
+uint32_t u32_UsrSystemClockGet();
+void system_SetState(SYSTEM_STATE SysState);
 
-void ConfigButtons(void);
-void ButtonsISR(void);
-void Button1ISR(void);
-void Button2ISR(void);
+uint32_t u32_UsrSystemClockGet()
+{
+	return systemClock;
+}
 
 /*****************************************************************************/
 void Config_System(void)
@@ -48,9 +49,6 @@ void Config_System(void)
 	LED_RED_OFF;
 	LED_GREEN_OFF;
 	LED_BLUE_OFF;
-
-	ConfigButtons();
-
 
 #ifdef _USE_KALMAN_FILTER_
 	system_SystickConfig(1);
@@ -77,19 +75,6 @@ static void SysTickIntHandle(void)
 {
 	ms_Tickcount++;
 	bool_Process_Flag = true;
-
-#ifdef _USE_HOSTCOMM_
-	if(HostComm_Enable_Timer_Flag == true)
-		HostComm_Timer_Counter++;
-	if(HostComm_Timer_Counter > UPDATE_TIME_MS)
-	{
-		HostComm_Timer_Counter = 0;
-		HostComm_Process_Flag = true;
-	}
-#endif
-
-
-
 }
 /*****************************************************************************/
 uint32_t Get_tick()
@@ -114,42 +99,65 @@ void Togle(uint8_t LED, uint32_t ms_delay)
 
 /****************************************************************************/
 /******************************************************************************
- * -- ConfigButtons(void) --------------------------------------
- *
- * Description	:
- * Parameters	: none
- * Return		: don't care
- */
-void ConfigButtons(void)
-{
-	HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;		//Unlock PF0 for using SW2
-	HWREG(GPIO_PORTF_BASE + GPIO_O_CR) |= 0x01;
-	HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = 0 ;
-
-	SysCtlPeripheralEnable(BUTTON_PERIPHERAL);
-	GPIODirModeSet(BUTTON_PORT, SW1|SW2, GPIO_DIR_MODE_IN);
-	GPIOPadConfigSet(BUTTON_PORT, SW1|SW2, GPIO_STRENGTH_8MA,
-				         GPIO_PIN_TYPE_STD_WPU);
-
-	GPIOIntTypeSet(BUTTON_PORT,SW1|SW2, GPIO_FALLING_EDGE);		//Configure GPIO Interrupt for SW1, SW2
-	GPIOIntRegister(BUTTON_PORT,&ButtonsISR);
-	GPIOIntEnable(BUTTON_PORT, SW1|SW2);
-	IntEnable(INT_GPIOF);
-	GPIOIntClear(BUTTON_PORT, SW1|SW2);
-}
-/******************************************************************************
  * --------------- void ButtonISR1(void) --------------------------------------
  *
  * Description	:
  * Parameters	: none
  * Return		: don't care
  */
-void Button1ISR(void)
+void ButtonLeftHandler(void)
 {
-	GPIOIntClear(BUTTON_PORT, SW1);									    // Clear the Button interrupt
-	SysCtlDelay(SysCtlClockGet()/3/10);
-
 	/*************write ur code here****************/
+	switch (system_GetState())
+	{
+		case SYSTEM_INITIALIZE:
+			DISSABLE_PWM();
+			bluetooth_print("Get motor model \n");
+			system_SetState(SYSTEM_GET_MOTOR_MODEL);
+			break;
+
+		case SYSTEM_GET_MOTOR_MODEL:
+			system_SetState(SYSTEM_ESTIMATE_MOTOR_MODEL);
+			bluetooth_print("Estimate motor model \n");
+			ENABLE_PWM();
+			speed_set(MOTOR_Left,100);
+			speed_set(MOTOR_Right,100);
+			break;
+
+		case SYSTEM_LOAD_MOTOR_MODEL:
+			loadMotorModel();
+			system_SetState(SYSTEM_WAIT_TO_RUN);
+			break;
+
+		case SYSTEM_ESTIMATE_MOTOR_MODEL:
+			bluetooth_print("Save motor model \n");
+			DISSABLE_PWM();
+			system_SetState(SYSTEM_SAVE_MOTOR_MODEL);
+			break;
+
+		case SYSTEM_SAVE_MOTOR_MODEL:
+			bluetooth_print("Wait to run \n");
+			saveMotorModel();
+			system_SetState(SYSTEM_WAIT_TO_RUN);
+			break;
+
+		case SYSTEM_WAIT_TO_RUN:
+			bluetooth_print("Sleep \n");
+			system_SetState(SYSTEM_SLEEP);
+			DISSABLE_PWM();
+			LED_BLUE_ON;
+			break;
+
+		case SYSTEM_SLEEP:
+			bluetooth_print("Active \n");
+			system_SetState(SYSTEM_ACTIVE);
+			ENABLE_PWM();
+			LED_BLUE_OFF;
+			break;
+
+		default:
+			break;
+	}
 }
 /******************************************************************************
  * --------------- void Button2ISR(void) --------------------------------------
@@ -158,34 +166,69 @@ void Button1ISR(void)
  * Parameters	: none
  * Return		: don't care
  */
-void Button2ISR(void)
+void ButtonRightHandler(void)
 {
-	GPIOIntClear(BUTTON_PORT, SW2);									    // Clear the Button interrupt
-	SysCtlDelay(SysCtlClockGet()/3/10);
-
 	/*****************Write ur code here*********************************/
 }
-//*****************************************************************************
-//
-//! GPIO  Interrupt Service Routine  for two button of main board.
-//!
-//! \param None
-//!
-//! \return None
-//
-//*****************************************************************************
-void ButtonsISR(void)
+SYSTEM_STATE system_GetState(void)
 {
-	uint32_t ui32Status;
-	ui32Status = GPIOIntStatus(BUTTON_PORT,true);
-	GPIOIntClear(BUTTON_PORT, ui32Status);
-	if (ui32Status & SW1)
+	return e_SystemState;
+}
+
+void system_SetState(SYSTEM_STATE SysState)
+{
+	e_SystemState = SysState;
+}
+
+void system_Process_System_State(void)
+{
+	switch (system_GetState())
 	{
-		Button1ISR();
-	}
-	else if (ui32Status & SW2)
-	{
-		Button2ISR();
+		/********Some test case********/
+		case SYSTEM_TEST_ENC:
+			Test_ENC();
+			break;
+		/******************************/
+		case SYSTEM_POWER_UP:
+			system_SetState(SYSTEM_INITIALIZE);
+			break;
+		case SYSTEM_INITIALIZE:
+			break;
+		case SYSTEM_ESTIMATE_MOTOR_MODEL:
+			ProcessSpeedControl();
+			break;
+		case SYSTEM_SAVE_MOTOR_MODEL:
+			break;
+		case SYSTEM_WAIT_TO_RUN:
+			DISSABLE_PWM();
+			ProcessSpeedControl();
+			break;
+		case SYSTEM_SLEEP:
+			DISSABLE_PWM();
+			ProcessSpeedControl();
+			break;
+		case SYSTEM_WAKE_UP:
+			//LED1_ON();
+			ProcessSpeedControl();
+			break;
+		case SYSTEM_ACTIVE:
+			ProcessSpeedControl();
+			Process_Balancing();
+			break;
+		case SYSTEM_ERROR:
+			DISSABLE_PWM();
+			IntMasterDisable();
+			while (1)
+			{
+				LED_BLUE_ON;
+				LED_RED_ON;
+				LED_GREEN_ON;
+				ROM_SysCtlDelay(ROM_SysCtlClockGet() / 3);
+				LED_BLUE_OFF;
+				LED_RED_OFF;
+				LED_GREEN_OFF;
+				ROM_SysCtlDelay(ROM_SysCtlClockGet() / 3);
+			}
+//			break;
 	}
 }
-/****************************************************************************** */

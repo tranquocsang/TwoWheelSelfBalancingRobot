@@ -13,11 +13,11 @@
 #include "../include.h"
 #include "PID.h"
 
-PID_PARAMETERS PID_Small_Angle = {.Kp = 2.0, .Kd = 0.9, .Ki =0.0,
-		.Ts = 0.01, .PID_Saturation = 70, .Const_K = 1.2, .e_=0.0, .e__=0.0, .u_=0.0};
+PID_PARAMETERS PID_Small_Angle = {.Kp = 23.0, .Kd = 3.0, .Ki =5.0,
+		.Ts = 0.015, .PID_Saturation = 90, .Const_K = 1.11, .e_=0.0, .e__=0.0, .u_=0.0};
 		
-PID_PARAMETERS PID_Big_Angle = {.Kp = 2.0, .Kd = 0.9, .Ki =0.0,
-		.Ts = 0.01, .PID_Saturation = 70, .Const_K = 1.2, .e_=0.0, .e__=0.0, .u_=0.0};
+PID_PARAMETERS PID_Big_Angle = {.Kp = 23.0, .Kd = 3.0, .Ki =5.0,
+		.Ts = 0.015, .PID_Saturation = 90, .Const_K = 1.11, .e_=0.0, .e__=0.0, .u_=0.0};
 //* Private variables -------------------------------------------------------*/
 /**
  * @brief set params for PID controller
@@ -28,7 +28,6 @@ void pid_set_k_params(PID_PARAMETERS* pid_parameter,float Kp,float Ki, float Kd)
 	pid_parameter->Ki = Ki;
 	pid_parameter->Kd = Kd;
 }
-
 /*
  * @brief calculate PID
  * @param pid_parmeter pointer to PID parameter
@@ -37,12 +36,13 @@ void pid_set_k_params(PID_PARAMETERS* pid_parameter,float Kp,float Ki, float Kd)
  */
 double pid_process(PID_PARAMETERS* pid_parameter, float Current_Angle, float Target_Angle)
 {
+
 	float error = (float)(Target_Angle - Current_Angle);
+
 	pid_parameter->e__ = pid_parameter->e_;
 	pid_parameter->e_ = pid_parameter->e;
 	pid_parameter->e = error;
 	pid_parameter->u_ = pid_parameter->u;
-
 	pid_parameter->u = pid_parameter->u_ + pid_parameter->Kp * (pid_parameter->e - pid_parameter->e_)
 			+ pid_parameter->Ki * pid_parameter->Ts * pid_parameter->e
 			+ (pid_parameter->Kd / pid_parameter->Ts) * (pid_parameter->e - (2 * pid_parameter->e_) + pid_parameter->e__);

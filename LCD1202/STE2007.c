@@ -146,11 +146,23 @@ const char ASCII[][6] ={
 // lcd_putc(char c)					: Display ASCII character on LCD
 // lcd_puts(char *s)				: Display character string on LCD
 //*****************************************************************************
-void lcd_write(char dc, char byte){
+void lcd_write(CS_LCD eCS_LCD,char dc, char byte){
 	char i;
 	if(dc) LCD_SDA_HIGH;
 	else LCD_SDA_LOW;
-	LCD_CS_LOW;
+
+	switch(eCS_LCD)
+	{
+	case LCD_1: 	LCD_CS1_LOW;break;
+	case LCD_2: 	LCD_CS2_LOW;break;
+	case LCD_3: 	LCD_CS3_LOW;break;
+	case LCD_ALL:
+		LCD_CS1_LOW;
+		LCD_CS2_LOW;
+		LCD_CS3_LOW;
+		break;
+	}
+
 	LCD_CLK_HIGH;
 	LCD_CLK_LOW;
 
@@ -161,100 +173,119 @@ void lcd_write(char dc, char byte){
 		LCD_CLK_HIGH;
 		LCD_CLK_LOW;
 	}
-	LCD_CS_HIGH;
+	switch(eCS_LCD)
+	{
+	case LCD_1: 	LCD_CS1_HIGH;break;
+	case LCD_2: 	LCD_CS2_HIGH;break;
+	case LCD_3: 	LCD_CS3_HIGH;break;
+	case LCD_ALL:
+		LCD_CS1_HIGH;
+		LCD_CS2_HIGH;
+		LCD_CS3_HIGH;
+		break;
+	}
 }
 
 //******************************************************************************
-void lcd_init(void){
+void lcd_init(void)
+{
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
 	LCD_PIN_TYPE_OUTPUT;
-	SysCtlDelay(SysCtlClockGet()/1000);
+
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+	LCD_PIN_TYPE_CS;
+
+	ROM_SysCtlDelay(SysCtlClockGet()/1000);
 	LCD_RESET_LOW;
-	SysCtlDelay(SysCtlClockGet()/1000);
-	LCD_CS_HIGH;
-	SysCtlDelay(SysCtlClockGet()/1000);
+	ROM_SysCtlDelay(SysCtlClockGet()/1000);
+
+	LCD_CS1_HIGH;
+	LCD_CS2_HIGH;
+	LCD_CS3_HIGH;
+	ROM_SysCtlDelay(SysCtlClockGet()/1000);
+
 	LCD_CLK_LOW;
-	SysCtlDelay(SysCtlClockGet()/1000);
+	ROM_SysCtlDelay(SysCtlClockGet()/1000);
 	LCD_RESET_HIGH;
 
 
-	SysCtlDelay(SysCtlClockGet()/1000);
+	ROM_SysCtlDelay(SysCtlClockGet()/1000);
 
-	lcd_write(FLAG_CMD, 0x20);						// Set voltage range
-	lcd_write(FLAG_CMD, LCD_CONTRAST);
+	lcd_write(LCD_ALL, FLAG_CMD, 0x20);						// Set voltage range
+	lcd_write(LCD_ALL, FLAG_CMD, LCD_CONTRAST);
 
-	lcd_write(FLAG_CMD, LCD_MODE | NORMAL);
-	lcd_write(FLAG_CMD, LCD_CHARGE_PUMP_ON);		// Enable charge pump
-	lcd_write(FLAG_CMD, LCD_MODE | ON);			// Display on
-	lcd_write(FLAG_CMD, 0x9F);
+	lcd_write(LCD_ALL, FLAG_CMD, LCD_MODE | NORMAL);
+	lcd_write(LCD_ALL, FLAG_CMD, LCD_CHARGE_PUMP_ON);		// Enable charge pump
+	lcd_write(LCD_ALL, FLAG_CMD, LCD_MODE | ON);			// Display on
+	lcd_write(LCD_ALL, FLAG_CMD, 0x9F);
 
-	lcd_clear();
+	lcd_clear(LCD_ALL);
 }
 
 //*****************************************************************************
-void lcd_clear(void){
+void lcd_clear(CS_LCD eCS_LCD){
 	unsigned int index;
-	lcd_gotoxy(0,0);
+	lcd_gotoxy(eCS_LCD, 0,0);
 	for(index=0; index < 864; index++){
-		lcd_write(FLAG_DATA,0x00);
+		lcd_write(eCS_LCD, FLAG_DATA,0x00);
 	}
-	lcd_gotoxy(0,0);
+	lcd_gotoxy(eCS_LCD, 0,0);
 }
 
 //*****************************************************************************
-void lcd_gotoxy(unsigned char col, unsigned char row){
-	lcd_write(FLAG_CMD,LCD_CHANGE_COL_LSB | ( col & 0x0F));
-	lcd_write(FLAG_CMD,LCD_CHANGE_COL_MSB | ((col >> 4) & 0x07 ));
-	lcd_write(FLAG_CMD,LCD_CHANGE_ROW | (row & 0x0F));
+void lcd_gotoxy(CS_LCD eCS_LCD, unsigned char col, unsigned char row){
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_CHANGE_COL_LSB | ( col & 0x0F));
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_CHANGE_COL_MSB | ((col >> 4) & 0x07 ));
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_CHANGE_ROW | (row & 0x0F));
 }
 
 //*****************************************************************************
-void lcd_normal(void){
-	lcd_write(FLAG_CMD,LCD_MODE|ON);
-	lcd_write(FLAG_CMD,LCD_MODE|NON_REVERSE);
-	lcd_write(FLAG_CMD,LCD_MODE|NORMAL);
-	lcd_write(FLAG_CMD,LCD_RAM_ADDR_VER_MODE);
+void lcd_normal(CS_LCD eCS_LCD){
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MODE|ON);
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MODE|NON_REVERSE);
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MODE|NORMAL);
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_RAM_ADDR_VER_MODE);
 }
 
 //*****************************************************************************
-void lcd_all(void){
-	lcd_write(FLAG_CMD,LCD_MODE|ON);
-	lcd_write(FLAG_CMD,LCD_MODE|NON_REVERSE);
-	lcd_write(FLAG_CMD,LCD_MODE|ALL);
+void lcd_all(CS_LCD eCS_LCD){
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MODE|ON);
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MODE|NON_REVERSE);
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MODE|ALL);
 }
 //******************************************************************************
-void lcd_mirror_x(void){
-	lcd_write(FLAG_CMD,LCD_MIRROR_X);
+void lcd_mirror_x(CS_LCD eCS_LCD){
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MIRROR_X);
 }
 //******************************************************************************
-void lcd_mirror_y(void){
-	lcd_write(FLAG_CMD,LCD_MIRROR_Y);
+void lcd_mirror_y(CS_LCD eCS_LCD){
+	lcd_write(eCS_LCD, FLAG_CMD,LCD_MIRROR_Y);
 }
 //******************************************************************************
-void lcd_putc(char c){
+void lcd_putc(CS_LCD eCS_LCD, char c){
 	if((c >= 0x20) && (c <= 0x7f)){
 		char i;
 		c -= 0x20;
 		for(i = 0; i < 6; i++){
-			lcd_write(FLAG_DATA, ASCII[c][i]);
+			lcd_write(eCS_LCD, FLAG_DATA, ASCII[c][i]);
 		}
 	}
 }
 
 //******************************************************************************
-void lcd_puts(char *s){
+void lcd_puts(CS_LCD eCS_LCD, char *s){
 	while(*s){
-		lcd_putc(*s++);
+		lcd_putc(eCS_LCD, *s++);
 	}
 }
 //******************************************************************************
-void lcd_putn(unsigned long num){
+void lcd_putn(CS_LCD eCS_LCD, unsigned long num){
 	signed char i;
 	char num_str[3];
 
 	for(i = 0; i < 3; i++) num_str[i] = 0xFF;//null char
 
-	if(num == 0) lcd_putc('0');
+	if(num == 0) lcd_putc(eCS_LCD, '0');
 	else{
 		i = 2;
 		while((num != 0)&&(i >= 0)){
@@ -263,14 +294,14 @@ void lcd_putn(unsigned long num){
 	 	num = num / 10;
 		}
 
-	lcd_puts(num_str);
+	lcd_puts(eCS_LCD, num_str);
 	}
 }
 //******************************************************************************
-void LCDDataWrite(const char *pcBuf, uint32_t ulLen){
+void LCDDataWrite(CS_LCD eCS_LCD, const char *pcBuf, uint32_t ulLen){
 	uint32_t i;
 	for(i = 0; i < ulLen; i++){
-		lcd_putc(*pcBuf);
+		lcd_putc(eCS_LCD, *pcBuf);
 		pcBuf++;
 	}
 }
@@ -314,7 +345,7 @@ void LCDDataWrite(const char *pcBuf, uint32_t ulLen){
 //
 //*****************************************************************************
 void
-LCDprintf(const char *pcString, ...)
+LCDprintf(CS_LCD eCS_LCD, const char *pcString, ...)
 {
 	static unsigned int ulPos, ulCount, ulNeg;
 	unsigned long ulValue, ulBase, ulIdx;
@@ -342,7 +373,7 @@ LCDprintf(const char *pcString, ...)
 		//
 		// Write this portion of the string.
 		//
-		LCDDataWrite(pcString, ulIdx);
+		LCDDataWrite(eCS_LCD, pcString, ulIdx);
 
 		//
 		// Skip the portion of the string that was written.
@@ -426,7 +457,7 @@ LCDprintf(const char *pcString, ...)
 				//
 				// Print out the character.
 				//
-				LCDDataWrite((char *)&ulValue, 1);
+				LCDDataWrite(eCS_LCD, (char *)&ulValue, 1);
 
 				//
 				// This command has been handled.
@@ -506,7 +537,7 @@ LCDprintf(const char *pcString, ...)
 				//
 				// Write the string.
 				//
-				LCDDataWrite(pcStr, ulIdx);
+				LCDDataWrite(eCS_LCD, pcStr, ulIdx);
 
 				//
 				// Write any required padding spaces
@@ -516,7 +547,7 @@ LCDprintf(const char *pcString, ...)
 					ulCount -= ulIdx;
 					while(ulCount--)
 					{
-						LCDDataWrite(" ", 1);
+						LCDDataWrite(eCS_LCD, " ", 1);
 					}
 				}
 				//
@@ -662,7 +693,7 @@ LCDprintf(const char *pcString, ...)
 				//
 				// Write the string.
 				//
-				LCDDataWrite(pcBuf, ulPos);
+				LCDDataWrite(eCS_LCD, pcBuf, ulPos);
 
 				//
 				// This command has been handled.
@@ -678,7 +709,7 @@ LCDprintf(const char *pcString, ...)
 				//
 				// Simply write a single %.
 				//
-				LCDDataWrite(pcString - 1, 1);
+				LCDDataWrite(eCS_LCD, pcString - 1, 1);
 
 				//
 				// This command has been handled.
@@ -694,7 +725,7 @@ LCDprintf(const char *pcString, ...)
 				//
 				// Indicate an error.
 				//
-				LCDDataWrite("ERROR", 5);
+				LCDDataWrite(eCS_LCD, "ERROR", 5);
 
 				//
 				// This command has been handled.
